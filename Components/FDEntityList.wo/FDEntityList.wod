@@ -1,0 +1,47 @@
+ENTITY_NAME_REPETITION : WORepetition {
+	item = currentEntityName;
+	list = entityNames;
+}
+
+SELECT_ENTITY_LINK : AjaxUpdateLink {
+	action = selectEntity;
+	updateContainerID = "smu";
+}
+
+EDIT_CONTAINER : AjaxUpdateContainer {
+	id = "smu";
+}
+
+ENTITY_NAME_STRING : WOString {
+	value = currentEntityName;
+}
+
+CURRENT_OBJECT_STRING : WOString {
+	value = currentObject.primaryKey;
+}
+
+CURRENT_OBJECT_NAME_STRING : WOString {
+	value = objectName;
+}
+
+OBJECT_REPETITION : WORepetition {
+	item = currentObject;
+	list = allObjects;
+}
+
+SELECT_OBJECT_LINK : WOHyperlink {
+	action = selectObject; 
+}
+
+CREATE_LINK : WOHyperlink {
+	action = createObject;
+	id = "createLink";
+}
+
+ENTITY_NAME : WOString {
+	value = selectedEntityName;
+}
+
+HAS_SELECTED_ENTITY : WOConditional {
+	condition = selectedEntityName;
+}
