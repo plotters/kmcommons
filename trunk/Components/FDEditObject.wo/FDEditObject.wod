@@ -1,0 +1,62 @@
+FORM: WOForm {
+	enctype = "multipart/form-data";
+}
+
+ATTRIBUTE_REPETITION : WORepetition {
+	item = currentAttributeName;
+	list = attributeNames;
+}
+
+ATTRIBUTE_NAME_STRING : WOString {
+	value = currentAttributeName;
+}
+
+TEXT_CONDITIONAL : WOConditional {
+	condition = attributeIsString;
+}
+
+INTEGER_CONDITIONAL : WOConditional {
+	condition = attributeIsInteger;
+}
+
+TIMESTAMP_CONDITIONAL : WOConditional {
+	condition = attributeIsTimestamp;
+}
+
+DATA_CONDITIONAL : WOConditional {
+	condition = attributeIsData;
+}
+
+ATTRIBUTE_VALUE_TEXT : WOText {
+	value = currentAttributeValue;
+	cols = 50;
+	rows = 3;
+}
+
+ATTRIBUTE_VALUE_INTEGER : WOTextField {
+	value = currentAttributeValue;
+	formatter = fieldFormatter;
+}
+
+ATTRIBUTE_VALUE_TIMESTAMP : WOTextField {
+	value = currentAttributeValue;
+	formatter = fieldFormatter;
+}
+
+ATTRIBUTE_VALUE_DATA : WOFileUpload {
+	data = currentAttributeValue;
+	filePath = filename;
+}
+
+SUBMIT_BUTTON : WOSubmitButton {
+	action = saveChanges;
+	value = "Vista";
+}
+
+DELETE_LINK : WOHyperlink {
+	action = deleteObject;
+}
+
+BACK_LINK : WOHyperlink {
+	action = returnToPreviousPage;
+}
