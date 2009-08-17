@@ -1,32 +1,4 @@
-<html>
-<head>
-</head>
-<body>
-<style type="text/css">
-	#entityList {
-		float: left;
-		width: 180px;
-		background-color: rgb( 240, 240, 240 );
-		border: 1px solid gray;
-		padding: 20px;
-	}
-
-	#objectList {
-		float: left;
-		width: 370px;
-		background-color: rgb( 240, 240, 240 );
-		border: 1px solid gray;
-		padding: 20px;
-		margin-left: 10px;
-	}
-	
-	#createLink {
-		float: right;
-		width: 20px;
-		height: 20px;
-		border: 1px solid black;
-	}
-</style>
+<wo:KMCommonLook>
 	<div id="entityList">
 		<ul>
 			<webobject name="ENTITY_NAME_REPETITION">
@@ -39,11 +11,19 @@
 			<div id="objectList">
 				<h2><webobject name="ENTITY_NAME" /></h2>
 				<webobject name="CREATE_LINK">+</webobject>
+				<table>
+					<tr>
+						<th>Númer</th>
+						<th>Heiti</th>
+					</tr>
 				<webobject name="OBJECT_REPETITION">
-					<webobject name="SELECT_OBJECT_LINK"><webobject name="CURRENT_OBJECT_STRING" /> - <webobject name="CURRENT_OBJECT_NAME_STRING" /></webobject><br />
+					<tr>
+						<td><webobject name="SELECT_OBJECT_LINK"><webobject name="CURRENT_OBJECT_STRING" /></webobject></td>
+						<td><webobject name="CURRENT_OBJECT_NAME_STRING" /></td>
+					</tr>
 				</webobject>
+				</table>
 			</div>
 		</webobject>
 	</webobject>
-</body>
-</html>
+</wo:KMCommonLook>
