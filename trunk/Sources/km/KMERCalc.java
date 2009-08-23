@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.regex.*;
 
 /**
- * A very simple wrapper for fetching currency exchange rates to the Central Bank of Iceland.
+ * A simple wrapper for fetching currency exchange rates to the Central Bank of Iceland.
+ * 
+ * Supported currencies: USD, GBP, CAD, DKK, NOK, SEK, CHF, JPY, XDR
  * 
  * XML data is cached. You need to invoke "reloadData()" to update values.
- * 
- * The parsing implementation in this class is ... interesting ...
- * I wanted to avoid dependencies on any xml parsing libraries.
+ * The parsing implementation in this class is ... interesting, since
+ * I wanted to avoid dependencies on any xml libraries.
  * 
  * For information on the XML provided by the Central Bank, look here:
  * http://sedlabanki.is/?PageID=662
@@ -22,7 +23,7 @@ import java.util.regex.*;
  * 	// Create a new calculator instance for June 1st 2004.
  * 	KMERCalc km = KMERCalc.create( "01.06.2004" );
  *
- *	// Print out data for all currencies.
+ *	// Print out a table of all currencies.
  *	System.out.println( km.rateTable() );
  *
  *	// Convert 9 canadian dollars to GBP.
@@ -30,11 +31,11 @@ import java.util.regex.*;
  *	</code>
  * 
  * @author Hugi Þórðarson
- * @version 0.1
+ * @version 0.00000000000000000000001b1
  * 
- * TODO: Currently using floats, switch to BigDecimal sometime in the future.
+ * TODO: Switch to BigDecimal once design is done.
  * TODO: Implement date ranges.
- * TODO: Wrap currencies into classes
+ * TODO: Wrap currencies into classes.
  * TODO: Add support for more currencies (provided in other documents).
  */
 
@@ -53,7 +54,7 @@ public class KMERCalc {
 	private static final String ENCODING = "ISO-8859-1";
 
 	/**
-	 * XML tag names (not all of them in use yet).
+	 * XML tag names (not all of these are in use yet).
 	 */
 	private static final String ROOT_TAG = "myntir";
 	private static final String CURRENCY_TAG = "mynt";
@@ -89,7 +90,7 @@ public class KMERCalc {
 		System.out.println( km.calculate( 9, "CAD", "GBP" ) );
 
 		// Convert 20 US Dollars to British Pounds.
-		System.out.println( km.calculate( 144, "USD", "EUR" ) );
+		System.out.println( km.calculate( 100, "USD", "EUR" ) );
 	}
 
 	/**
@@ -103,7 +104,6 @@ public class KMERCalc {
 	 * Factory method to create instances. 
 	 * 
 	 * @param dateString takes a date of the format %d.%m.%Y. If null, current rates are used.
-	 * 
 	 */
 	public static KMERCalc create( String dateString ) {
 		KMERCalc km = new KMERCalc();
@@ -183,22 +183,22 @@ public class KMERCalc {
 	/**
 	 * @return The purchase rate of the given currency
 	 */
-	public Float ratePurchaseForCurrency( String symbol ) {
-		return KMERUtil.toFloat( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_PURCHASE_RATE_TAG ) );
+	public Double ratePurchaseForCurrency( String symbol ) {
+		return KMERUtil.toDouble( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_PURCHASE_RATE_TAG ) );
 	}
 
 	/**
 	 * @return The selling rate of the given currency
 	 */
-	public Float rateSellingForCurrency( String symbol ) {
-		return KMERUtil.toFloat( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_SELLING_RATE_TAG ) );
+	public Double rateSellingForCurrency( String symbol ) {
+		return KMERUtil.toDouble( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_SELLING_RATE_TAG ) );
 	}
 
 	/**
 	 * @return The mid rate of the given currency
 	 */
-	public Float rateMidForCurrency( String symbol ) {
-		return KMERUtil.toFloat( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_MID_RATE_TAG ) );
+	public Double rateMidForCurrency( String symbol ) {
+		return KMERUtil.toDouble( valueOfTagAfterTag( CURRENCY_SYMBOL_TAG, symbol, CURRENCY_MID_RATE_TAG ) );
 	}
 
 	/**
@@ -230,13 +230,13 @@ public class KMERCalc {
 	 * 
 	 * @return The value converted.
 	 */
-	public Float calculate( Number amount, String fromCurrencySymbol, String toCurrencySymbol ) {
+	public Double calculate( Number amount, String fromCurrencySymbol, String toCurrencySymbol ) {
 		KMERCalc km = create( null );
-		Float fromCurrencyRate = km.rateMidForCurrency( fromCurrencySymbol );
-		Float toCurrencyRate = km.rateMidForCurrency( toCurrencySymbol );
+		Double fromCurrencyRate = km.rateMidForCurrency( fromCurrencySymbol );
+		Double toCurrencyRate = km.rateMidForCurrency( toCurrencySymbol );
 
-		float ratio = fromCurrencyRate / toCurrencyRate;
-		float result = amount.floatValue() * ratio;
+		Double ratio = fromCurrencyRate / toCurrencyRate;
+		Double result = amount.doubleValue() * ratio;
 		return result;
 	}
 
@@ -265,6 +265,8 @@ public class KMERCalc {
 
 class KMERUtil {
 	/**
+	 * Equivalent to USDataUtilities.readBytesFromURL
+	 * 
 	 * Downloads data from the given url. 
 	 */
 	static byte[] downloadData( String address ) {
@@ -306,13 +308,13 @@ class KMERUtil {
 	}
 
 	/**
+	 * Equivalent to USStringUtilities.padString
+	 * 
 	 * This method will adjust a String to a certain length. If the string is
 	 * too long, it pads it with spaces on the left. If the string is too short,
 	 * it will cut of the end of it.
 	 * 
 	 * Created to make creation of fixed length string easier.
-	 * 
-	 * @author Hugi Þórðarson
 	 */
 	static String padString( Object object, int desiredLength ) {
 
@@ -338,11 +340,11 @@ class KMERUtil {
 	}
 
 	/**
-	 * Converts a string to a float, returning null if the conversion fails.  
+	 * Converts a string to a double, returning null if the conversion fails.  
 	 */
-	static Float toFloat( String s ) {
+	static Double toDouble( String s ) {
 		try {
-			return Float.valueOf( s );
+			return Double.valueOf( s );
 		}
 		catch( Exception e ) {
 			return null;
