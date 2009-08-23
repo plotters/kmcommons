@@ -60,3 +60,7 @@ DELETE_LINK : WOHyperlink {
 BACK_LINK : WOHyperlink {
 	action = returnToPreviousPage;
 }
+
+DOWNLOAD : WOHyperlink {
+	action = download;
+}
