@@ -1,5 +1,7 @@
 package km.components;
 
+import is.us.wo.util.USHTTPUtilities;
+
 import java.text.Format;
 
 import com.webobjects.appserver.*;
@@ -124,5 +126,9 @@ public class FDEditObject extends KMComponent {
 
 	public WOComponent pageToReturnTo() {
 		return _pageToReturnTo;
+	}
+
+	public WOActionResults download() {
+		return USHTTPUtilities.responseWithDataAndMimeType( "file.bin", (NSData)currentAttributeValue(), "octet/stream", true );
 	}
 }
