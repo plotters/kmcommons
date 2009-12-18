@@ -2,6 +2,7 @@ package km.components;
 
 import com.webobjects.appserver.*;
 import com.webobjects.eoaccess.*;
+import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.foundation.*;
 
 import er.extensions.eof.ERXGenericRecord;
@@ -82,9 +83,13 @@ public class FDEntityList extends KMComponent {
 	}
 
 	public WOActionResults createObject() {
-		EOUtilities.createAndInsertInstance( ec(), selectedEntityName() );
+		ERXGenericRecord eo = (ERXGenericRecord) EOUtilities.createAndInsertInstance( ec(), selectedEntityName() );
 		ec().saveChanges();
-		return context().page();
+
+		FDEditObject nextPage = pageWithName( FDEditObject.class );
+		nextPage.setSelectedObject( eo );
+		nextPage.setPageToReturnTo( this );
+		return nextPage;
 	}
 
 	public void setSelectedEntityName( String _selectedEntityName ) {

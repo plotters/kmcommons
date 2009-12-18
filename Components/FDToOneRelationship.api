@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wodefinitions>
+    <wo class="FDToOneRelationship" wocomponentcontent="false">    <binding name="entityName"/>
+        <validation message="'entityName' is a required binding.">
+            <unbound name="entityName"/>
+        </validation>
+        <binding name="object"/>
+        <validation message="'object' is a required binding.">
+            <unbound name="object"/>
+        </validation>
+        <binding name="keypath"/>
+    <validation message="'keypath' is a required binding.">
+            <unbound name="keypath"/>
+        </validation>
+    <binding name="displayKey"/>
+        <validation message="'displayKey' is a required binding.">
+            <unbound name="displayKey"/>
+        </validation>
+    </wo>
+</wodefinitions>
