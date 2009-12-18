@@ -64,3 +64,19 @@ BACK_LINK : WOHyperlink {
 DOWNLOAD : WOHyperlink {
 	action = download;
 }
+
+RELATIONSHIP_NAME_STRING : WOString {
+	value = currentRelationship.name;
+}
+
+RELATIONSHIP_REPETITION : WORepetition {
+	item = currentRelationship;
+	list = selectedObject.entity.relationships;
+}
+
+TO_ONE : FDToOneRelationship {
+	entityName = currentRelationship.destinationEntity.name;
+	object = selectedObject;
+	keypath = currentRelationship.name;
+	displayKey = "name"; 
+}

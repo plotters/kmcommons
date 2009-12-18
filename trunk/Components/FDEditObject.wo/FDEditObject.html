@@ -17,6 +17,15 @@
 					</td>
 				</tr>
 				</webobject>
+				<webobject name="RELATIONSHIP_REPETITION">
+				<tr>
+					<td><webobject name="RELATIONSHIP_NAME_STRING" /></td>
+					<td>
+						<!-- FIXME: MISSING TO-MANY EDITOR -->
+						<wo:condition condition = "$currentRelationship.isToMany" negate="$true"><webobject name="TO_ONE" /></wo:condition>
+					</td>
+				</tr>					
+				</webobject>
 				<tr>
 					<td><webobject name="DELETE_LINK">Eyða</webobject></td>
 					<td><webobject name="BACK_LINK">Hætta við</webobject></td>

@@ -1,0 +1,7 @@
+POP_UP : WOPopUpButton {
+	item = currentObject;
+	list = objects;
+	displayString = displayString;
+	noSelectionString = "...";
+	selection = selectedObject;
+}

@@ -28,6 +28,7 @@ public class FDEditObject extends KMComponent {
 	private WOComponent _pageToReturnTo;
 
 	public String currentAttributeName;
+	public EORelationship currentRelationship;
 	public String filename;
 
 	public FDEditObject( WOContext context ) {
@@ -44,13 +45,33 @@ public class FDEditObject extends KMComponent {
 
 		NSMutableArray<String> attributeNames = new NSMutableArray<String>();
 
+		System.out.println( entity.classProperties() );
 		for( EOAttribute attribute : entity.attributes() ) {
-			if( !attribute._isPrimaryKeyClassProperty() )
+			if( entity.classProperties().containsObject( attribute) && !attribute._isPrimaryKeyClassProperty() )
 				attributeNames.addObject( attribute.name() );
 		}
 
 		return attributeNames;
 	}
+	
+	/**
+	 * All attribute names, excluding PK attributes. 
+	 *
+	public NSArray<EORelationship> relationships() {
+		
+		String entityName = _selectedObject.entityName();
+		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
+		
+		NSMutableArray<String> relationshipNames = new NSMutableArray<String>();
+		
+		for( EORelationship relationship : entity.relationships() ) {
+			if( !relationship.isToMany() )
+				relationshipNames.addObject( relationship.name() );
+		}
+		
+		return relationships;
+	}
+	*/
 
 	public void setSelectedObject( ERXGenericRecord selectedObject ) {
 		this._selectedObject = selectedObject;
