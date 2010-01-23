@@ -18,9 +18,9 @@ public class FDToManyRelationship extends KMComponent {
 	private static final String SELECTED_OBJECT = "selectedObject";
 	public String entityName;
 	public String displayKey;
-	public String fieldName;
+	public String keypath;
 	public String inspectorPageName;
-	public EOEnterpriseObject record;
+	public EOEnterpriseObject object;
 
 	public EOEnterpriseObject currentObjectInPopUp;
 	public EOEnterpriseObject selectedObjectInPopUp;
@@ -49,18 +49,18 @@ public class FDToManyRelationship extends KMComponent {
 
 	public NSArray<EOEnterpriseObject> selectedObjects() {
 		EOSortOrdering s = new EOSortOrdering( displayKey, EOSortOrdering.CompareAscending );
-		NSArray<EOEnterpriseObject> a = (NSArray<EOEnterpriseObject>)record.valueForKeyPath( fieldName );
+		NSArray<EOEnterpriseObject> a = (NSArray<EOEnterpriseObject>)object.valueForKeyPath( keypath );
 		return EOSortOrdering.sortedArrayUsingKeyOrderArray( a, new NSArray<EOSortOrdering>( s ) );
 	}
 
 	public WOActionResults removeObject() {
-		record.removeObjectFromBothSidesOfRelationshipWithKey( currentObject, fieldName );
+		object.removeObjectFromBothSidesOfRelationshipWithKey( currentObject, keypath );
 		ec().saveChanges();
 		return context().page();
 	}
 
 	public WOActionResults addObject() {
-		record.addObjectToBothSidesOfRelationshipWithKey( selectedObjectInPopUp, fieldName );
+		object.addObjectToBothSidesOfRelationshipWithKey( selectedObjectInPopUp, keypath );
 		ec().saveChanges();
 		return context().page();
 	}
@@ -69,6 +69,9 @@ public class FDToManyRelationship extends KMComponent {
 		return (tableIndex % 2 == 0) ? "#cccccc" : null;
 	}
 
+	/**
+	 * @return True, if there's no inspector page set.
+	 */
 	public boolean isDisabled() {
 		return inspectorPageName == null;
 	}
