@@ -78,5 +78,12 @@ TO_ONE : FDToOneRelationship {
 	entityName = currentRelationship.destinationEntity.name;
 	object = selectedObject;
 	keypath = currentRelationship.name;
+	displayKey = "name";
+}
+
+TO_MANY : FDToManyRelationship {
+	entityName = currentRelationship.destinationEntity.name;
+	object = selectedObject;
+	keypath = currentRelationship.name;
 	displayKey = "name"; 
 }
