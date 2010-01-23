@@ -1,4 +1,6 @@
-package km.components;
+package km.components.crud;
+
+import km.components.KMComponent;
 
 import com.webobjects.appserver.*;
 import com.webobjects.eoaccess.*;

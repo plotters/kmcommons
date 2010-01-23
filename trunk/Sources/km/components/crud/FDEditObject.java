@@ -1,8 +1,10 @@
-package km.components;
+package km.components.crud;
 
 import is.us.wo.util.USHTTPUtilities;
 
 import java.text.Format;
+
+import km.components.KMComponent;
 
 import com.webobjects.appserver.*;
 import com.webobjects.eoaccess.*;
