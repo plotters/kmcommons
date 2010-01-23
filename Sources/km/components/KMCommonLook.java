@@ -15,4 +15,9 @@ public class KMCommonLook extends ERXComponent {
 	public KMCommonLook( WOContext context ) {
 		super( context );
 	}
+
+	@Override
+	protected boolean useDefaultComponentCSS() {
+		return true;
+	}
 }
