@@ -1,0 +1,41 @@
+REMOVE_LINK: AjaxUpdateLink {
+	action = removeObject;
+	updateContainerID = "smu";
+}
+
+SELECT_LINK: WOHyperlink {
+	action = selectObject;
+	disabled = isDisabled;
+}
+
+POPUP: WOPopUpButton {
+	displayString = popUpDisplayString;
+	item = currentObjectInPopUp;
+	list = allObjects;
+	selection = selectedObjectInPopUp;
+}
+
+REPETITION: WORepetition {
+	index = tableIndex;
+	item = currentObject;
+	list = selectedObjects;
+}
+
+NAME_STRING: WOString {
+	value = displayString;
+	valueWhenEmpty = "(Ónefnt)";
+}
+
+ADD_BUTTON: AjaxSubmitButton {
+	action = addObject;
+	value = "Bæta við";
+	updateContainerID = "smu";
+}
+
+UPDATE_CONTAINER : AjaxUpdateContainer {
+	id = "smu";
+}
+
+ANY_LEFT_CONDITIONAL : WOConditional {
+	condition = allObjects.count;
+}

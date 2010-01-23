@@ -19,7 +19,7 @@ public class FDToOneRelationship extends KMComponent {
 	public EOEnterpriseObject object;
 
 	/**
-	 * The object to set a value in.
+	 * 
 	 */
 	public EOEnterpriseObject currentObject;
 
