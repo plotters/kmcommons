@@ -49,8 +49,9 @@ public class FDEditObject extends KMComponent {
 		NSMutableArray<EOAttribute> attributes = new NSMutableArray<EOAttribute>();
 
 		for( EOAttribute attribute : entity.attributes() ) {
-			if( entity.classProperties().containsObject( attribute ) && !attribute._isPrimaryKeyClassProperty() )
+			if( entity.classProperties().containsObject( attribute ) && !attribute._isPrimaryKeyClassProperty() ) {
 				attributes.addObject( attribute );
+			}
 		}
 
 		return attributes;
@@ -67,7 +68,9 @@ public class FDEditObject extends KMComponent {
 		NSMutableArray<EORelationship> relationships = new NSMutableArray<EORelationship>();
 
 		for( EORelationship relationship : entity.relationships() ) {
-			relationships.addObject( relationship );
+			if( entity.classProperties().containsObject( relationship ) ) {
+				relationships.addObject( relationship );
+			}
 		}
 
 		return relationships;

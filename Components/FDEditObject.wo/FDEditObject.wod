@@ -1,7 +1,3 @@
-FORM: WOForm {
-	enctype = "multipart/form-data";
-}
-
 ATTRIBUTE_REPETITION : WORepetition {
 	item = currentAttribute;
 	list = attributes;
@@ -71,7 +67,7 @@ RELATIONSHIP_NAME_STRING : WOString {
 
 RELATIONSHIP_REPETITION : WORepetition {
 	item = currentRelationship;
-	list = selectedObject.entity.relationships;
+	list = relationships;
 }
 
 TO_ONE : FDToOneRelationship {
