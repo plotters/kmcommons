@@ -1,4 +1,4 @@
-package km.components;
+package km.components.crud;
 
 import is.us.util.USEOUtilities;
 
