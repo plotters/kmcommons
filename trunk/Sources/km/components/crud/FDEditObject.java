@@ -16,11 +16,12 @@ import er.extensions.eof.ERXGenericRecord;
  * Edits a single EO.
  * 
  * @author Hugi Þórðarson
+ * 
+ * TODO: Add handling of data attributes.
  */
 
 public class FDEditObject extends KMComponent {
 
-	// FIXME: Missing class for handling NSData.
 	private static final String INTEGER_CLASS = "java.lang.Integer";
 	private static final String TIMESTAMP_CLASS = "com.webobjects.foundation.NSTimestamp";
 	private static final String STRING_CLASS = "java.lang.String";
@@ -29,7 +30,7 @@ public class FDEditObject extends KMComponent {
 	private ERXGenericRecord _selectedObject;
 	private WOComponent _pageToReturnTo;
 
-	public String currentAttributeName;
+	public EOAttribute currentAttribute;
 	public EORelationship currentRelationship;
 	public String filename;
 
@@ -38,36 +39,39 @@ public class FDEditObject extends KMComponent {
 	}
 
 	/**
-	 * All attribute names, excluding PK attributes.
+	 * Editable attributes (excluding PK attributes)
 	 */
-	public NSArray<String> attributeNames() {
+	public NSArray<EOAttribute> attributes() {
 
 		String entityName = _selectedObject.entityName();
 		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
 
-		NSMutableArray<String> attributeNames = new NSMutableArray<String>();
+		NSMutableArray<EOAttribute> attributes = new NSMutableArray<EOAttribute>();
 
 		for( EOAttribute attribute : entity.attributes() ) {
 			if( entity.classProperties().containsObject( attribute ) && !attribute._isPrimaryKeyClassProperty() )
-				attributeNames.addObject( attribute.name() );
+				attributes.addObject( attribute );
 		}
 
-		return attributeNames;
+		return attributes;
 	}
 
 	/**
-	 * All attribute names, excluding PK attributes.
-	 * 
-	 * public NSArray<EORelationship> relationships() {
-	 * 
-	 * String entityName = _selectedObject.entityName(); EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
-	 * 
-	 * NSMutableArray<String> relationshipNames = new NSMutableArray<String>();
-	 * 
-	 * for( EORelationship relationship : entity.relationships() ) { if( !relationship.isToMany() ) relationshipNames.addObject( relationship.name() ); }
-	 * 
-	 * return relationships; }
+	 * Editable relationships.
 	 */
+	public NSArray<EORelationship> relationships() {
+
+		String entityName = _selectedObject.entityName();
+		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
+
+		NSMutableArray<EORelationship> relationships = new NSMutableArray<EORelationship>();
+
+		for( EORelationship relationship : entity.relationships() ) {
+			relationships.addObject( relationship );
+		}
+
+		return relationships;
+	}
 
 	public void setSelectedObject( ERXGenericRecord selectedObject ) {
 		this._selectedObject = selectedObject;
@@ -78,16 +82,16 @@ public class FDEditObject extends KMComponent {
 	}
 
 	public void setCurrentAttributeValue( Object value ) {
-		_selectedObject.takeValueForKey( value, currentAttributeName );
+		_selectedObject.takeValueForKey( value, currentAttribute.name() );
 	}
 
 	public Object currentAttributeValue() {
-		return _selectedObject.valueForKey( currentAttributeName );
+		return _selectedObject.valueForKey( currentAttribute.name() );
 	}
 
 	public EOAttribute currentAttribute() {
 		String entityName = _selectedObject.entityName();
-		return EOModelGroup.defaultGroup().entityNamed( entityName ).attributeNamed( currentAttributeName );
+		return EOModelGroup.defaultGroup().entityNamed( entityName ).attributeNamed( currentAttribute.name() );
 	}
 
 	public Format fieldFormatter() {

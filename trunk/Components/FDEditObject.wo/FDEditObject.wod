@@ -3,12 +3,12 @@ FORM: WOForm {
 }
 
 ATTRIBUTE_REPETITION : WORepetition {
-	item = currentAttributeName;
-	list = attributeNames;
+	item = currentAttribute;
+	list = attributes;
 }
 
 ATTRIBUTE_NAME_STRING : WOString {
-	value = currentAttributeName;
+	value = currentAttribute.name;
 }
 
 TEXT_CONDITIONAL : WOConditional {
