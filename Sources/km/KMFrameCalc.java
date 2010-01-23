@@ -7,8 +7,8 @@ import java.io.File;
 import com.webobjects.foundation.*;
 
 /**
- * * Convert between timecodes and frame numbers.
- * * Add multiple timecodes to get one results.
+ * * Converts between timecodes and frame numbers.
+ * * Adds multiple timecodes to get one result.
  * * Timecodes within one project are always of the same type.
  * 
  * @author Ósk Gunnlaugsdóttir
