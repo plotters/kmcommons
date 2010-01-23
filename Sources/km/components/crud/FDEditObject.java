@@ -38,7 +38,7 @@ public class FDEditObject extends KMComponent {
 	}
 
 	/**
-	 * All attribute names, excluding PK attributes. 
+	 * All attribute names, excluding PK attributes.
 	 */
 	public NSArray<String> attributeNames() {
 
@@ -49,31 +49,26 @@ public class FDEditObject extends KMComponent {
 
 		System.out.println( entity.classProperties() );
 		for( EOAttribute attribute : entity.attributes() ) {
-			if( entity.classProperties().containsObject( attribute) && !attribute._isPrimaryKeyClassProperty() )
+			if( entity.classProperties().containsObject( attribute ) && !attribute._isPrimaryKeyClassProperty() )
 				attributeNames.addObject( attribute.name() );
 		}
 
 		return attributeNames;
 	}
-	
+
 	/**
-	 * All attribute names, excluding PK attributes. 
-	 *
-	public NSArray<EORelationship> relationships() {
-		
-		String entityName = _selectedObject.entityName();
-		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
-		
-		NSMutableArray<String> relationshipNames = new NSMutableArray<String>();
-		
-		for( EORelationship relationship : entity.relationships() ) {
-			if( !relationship.isToMany() )
-				relationshipNames.addObject( relationship.name() );
-		}
-		
-		return relationships;
-	}
-	*/
+	 * All attribute names, excluding PK attributes.
+	 * 
+	 * public NSArray<EORelationship> relationships() {
+	 * 
+	 * String entityName = _selectedObject.entityName(); EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
+	 * 
+	 * NSMutableArray<String> relationshipNames = new NSMutableArray<String>();
+	 * 
+	 * for( EORelationship relationship : entity.relationships() ) { if( !relationship.isToMany() ) relationshipNames.addObject( relationship.name() ); }
+	 * 
+	 * return relationships; }
+	 */
 
 	public void setSelectedObject( ERXGenericRecord selectedObject ) {
 		this._selectedObject = selectedObject;
@@ -133,11 +128,17 @@ public class FDEditObject extends KMComponent {
 		return returnToPreviousPage();
 	}
 
+	/**
+	 * Deletes the currently selected object.
+	 */
 	public WOActionResults deleteObject() {
 		ec().deleteObject( selectedObject() );
 		return saveChanges();
 	}
 
+	/**
+	 * Returns to the previous page.
+	 */
 	public WOActionResults returnToPreviousPage() {
 		pageToReturnTo().ensureAwakeInContext( context() );
 		return pageToReturnTo();
