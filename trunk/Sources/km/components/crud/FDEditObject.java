@@ -47,7 +47,6 @@ public class FDEditObject extends KMComponent {
 
 		NSMutableArray<String> attributeNames = new NSMutableArray<String>();
 
-		System.out.println( entity.classProperties() );
 		for( EOAttribute attribute : entity.attributes() ) {
 			if( entity.classProperties().containsObject( attribute ) && !attribute._isPrimaryKeyClassProperty() )
 				attributeNames.addObject( attribute.name() );
