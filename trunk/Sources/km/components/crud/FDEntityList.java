@@ -4,10 +4,9 @@ import km.components.KMComponent;
 
 import com.webobjects.appserver.*;
 import com.webobjects.eoaccess.*;
-import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.foundation.*;
 
-import er.extensions.eof.ERXGenericRecord;
+import er.extensions.eof.*;
 
 /**
  * @author Hugi Þórðarson
@@ -85,7 +84,7 @@ public class FDEntityList extends KMComponent {
 	}
 
 	public WOActionResults createObject() {
-		ERXGenericRecord eo = (ERXGenericRecord) EOUtilities.createAndInsertInstance( ec(), selectedEntityName() );
+		ERXGenericRecord eo = (ERXGenericRecord)EOUtilities.createAndInsertInstance( ec(), selectedEntityName() );
 		ec().saveChanges();
 
 		FDEditObject nextPage = pageWithName( FDEditObject.class );
@@ -108,5 +107,12 @@ public class FDEntityList extends KMComponent {
 
 	public ERXGenericRecord selectedObject() {
 		return _selectedObject;
+	}
+
+	/**
+	 * @return The total number of objects in the database.
+	 */
+	public Integer numberOfObjects() {
+		return ERXEOControlUtilities.objectCountWithQualifier( ec(), selectedEntityName(), null );
 	}
 }
