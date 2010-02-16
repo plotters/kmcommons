@@ -21,6 +21,7 @@ public class FDToManyRelationship extends KMComponent {
 	public String keypath;
 	public String inspectorPageName;
 	public EOEnterpriseObject object;
+	public boolean allowDuplicates = false;
 
 	public EOEnterpriseObject currentObjectInPopUp;
 	public EOEnterpriseObject selectedObjectInPopUp;
@@ -35,7 +36,11 @@ public class FDToManyRelationship extends KMComponent {
 	public NSArray<EOEnterpriseObject> allObjects() {
 		EOSortOrdering s = new EOSortOrdering( displayKey, EOSortOrdering.CompareAscending );
 		NSMutableArray<EOEnterpriseObject> a = EOUtilities.objectsForEntityNamed( ec(), entityName ).mutableClone();
-		a.removeObjectsInArray( selectedObjects() );
+
+		if( !allowDuplicates ) {
+			a.removeObjectsInArray( selectedObjects() );
+		}
+
 		return EOSortOrdering.sortedArrayUsingKeyOrderArray( a, new NSArray<EOSortOrdering>( s ) );
 	}
 
@@ -65,10 +70,6 @@ public class FDToManyRelationship extends KMComponent {
 		return context().page();
 	}
 
-	public String bgColor() {
-		return (tableIndex % 2 == 0) ? "#cccccc" : null;
-	}
-
 	/**
 	 * @return True, if there's no inspector page set.
 	 */
@@ -76,6 +77,9 @@ public class FDToManyRelationship extends KMComponent {
 		return inspectorPageName == null;
 	}
 
+	/**
+	 * Selects the current object in the list.
+	 */
 	public WOActionResults selectObject() {
 		WOComponent nextPage = pageWithName( inspectorPageName );
 		nextPage.takeValueForKey( currentObject, SELECTED_OBJECT );
