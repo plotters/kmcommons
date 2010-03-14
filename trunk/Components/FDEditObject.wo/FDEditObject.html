@@ -7,20 +7,24 @@
 					<th></th>
 				</tr>
 				<webobject name="ATTRIBUTE_REPETITION">
-				<tr>
-					<td><webobject name="ATTRIBUTE_NAME_STRING" /></td>
-					<td>
-						<webobject name="TEXT_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_TEXT" /></webobject>
-						<webobject name="INTEGER_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_INTEGER" /></webobject>
-						<webobject name="TIMESTAMP_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_TIMESTAMP" /></webobject>
-						<webobject name="DATA_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_DATA" /> <webobject name="DOWNLOAD">download</webobject></webobject>
-					</td>
-				</tr>
+					<wo:conditional condition="$isFK" negate="$true">
+						<tr>
+							<td><webobject name="ATTRIBUTE_NAME_STRING" /></td>
+							<td>
+								<webobject name="TEXT_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_TEXT" /></webobject>
+								<webobject name="INTEGER_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_INTEGER" /></webobject>
+								<webobject name="TIMESTAMP_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_TIMESTAMP" /></webobject>
+								<webobject name="DATA_CONDITIONAL"><webobject name="ATTRIBUTE_VALUE_DATA" /> <webobject name="DOWNLOAD">download</webobject></webobject>
+							</td>
+						</tr>
+					</wo:conditional>
 				</webobject>
 				<webobject name="RELATIONSHIP_REPETITION">
 				<tr>
 					<td><webobject name="RELATIONSHIP_NAME_STRING" /></td>
 					<td>
+						<wo:conditional condition="$currentRelationship.isToMany"><webobject name="TO_MANY" /></wo:conditional>
+						<wo:conditional condition="$currentRelationship.isToMany" negate="$true"><webobject name="TO_ONE" /></wo:conditional>
 					</td>
 				</tr>					
 				</webobject>

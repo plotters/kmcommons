@@ -38,6 +38,21 @@ public class FDEditObject extends KMComponent {
 		super( context );
 	}
 
+	public boolean isFK() {
+		String entityName = _selectedObject.entityName();
+		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( entityName );
+
+		for( EORelationship relationship : entity.relationships() ) {
+			for( EOJoin j : relationship.joins() ) {
+				if( j.sourceAttribute().equals( currentAttribute ) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * Editable attributes (excluding PK attributes)
 	 */
