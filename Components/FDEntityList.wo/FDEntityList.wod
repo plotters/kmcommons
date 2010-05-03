@@ -3,9 +3,8 @@ ENTITY_NAME_REPETITION : WORepetition {
 	list = entityNames;
 }
 
-SELECT_ENTITY_LINK : AjaxUpdateLink {
+SELECT_ENTITY_LINK : WOHyperlink {
 	action = selectEntity;
-	updateContainerID = "smu";
 }
 
 EDIT_CONTAINER : AjaxUpdateContainer {
