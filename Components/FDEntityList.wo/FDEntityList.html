@@ -13,13 +13,20 @@
 				<webobject name="CREATE_LINK">+</webobject>
 				<table>
 					<tr>
-						<th>Númer</th>
-						<th>Heiti</th>
+						<wo:repetition item="$currentAttributeName" list="$attributeNames">
+							<th><wo:str value="$currentAttributeName" /></th>
+						</wo:repetition>
+						<th>&nbsp;</th>
 					</tr>
 				<webobject name="OBJECT_REPETITION">
 					<tr>
-						<td><webobject name="SELECT_OBJECT_LINK"><webobject name="CURRENT_OBJECT_STRING" /></webobject></td>
-						<td><webobject name="CURRENT_OBJECT_NAME_STRING" /></td>
+						<wo:repetition item="$currentAttributeName" list="$attributeNames">
+							<td>
+								<wo:conditional condition="$isImage" negate="$true"><wo:str value="$currentValue" /></wo:conditional>
+								<wo:conditional condition="$isImage" negate="$false"><wo:image mimeType="image/jpeg" data="$currentValue" /></wo:conditional>
+							</td>
+						</wo:repetition>
+						<td><wo:link action="$selectObject">velja</wo:link></td>
 					</tr>
 				</webobject>
 				</table>

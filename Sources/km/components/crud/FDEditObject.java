@@ -6,9 +6,19 @@ import java.text.Format;
 
 import km.components.KMComponent;
 
-import com.webobjects.appserver.*;
-import com.webobjects.eoaccess.*;
-import com.webobjects.foundation.*;
+import com.webobjects.appserver.WOActionResults;
+import com.webobjects.appserver.WOComponent;
+import com.webobjects.appserver.WOContext;
+import com.webobjects.eoaccess.EOAttribute;
+import com.webobjects.eoaccess.EOEntity;
+import com.webobjects.eoaccess.EOJoin;
+import com.webobjects.eoaccess.EOModelGroup;
+import com.webobjects.eoaccess.EORelationship;
+import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSData;
+import com.webobjects.foundation.NSMutableArray;
+import com.webobjects.foundation.NSNumberFormatter;
+import com.webobjects.foundation.NSTimestampFormatter;
 
 import er.extensions.eof.ERXGenericRecord;
 
@@ -100,7 +110,9 @@ public class FDEditObject extends KMComponent {
 	}
 
 	public void setCurrentAttributeValue( Object value ) {
-		_selectedObject.takeValueForKey( value, currentAttribute.name() );
+		if( value != null ) {
+			_selectedObject.takeValueForKey( value, currentAttribute.name() );
+		}
 	}
 
 	public Object currentAttributeValue() {

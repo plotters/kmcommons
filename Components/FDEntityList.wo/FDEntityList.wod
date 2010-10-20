@@ -15,21 +15,9 @@ ENTITY_NAME_STRING : WOString {
 	value = currentEntityName;
 }
 
-CURRENT_OBJECT_STRING : WOString {
-	value = currentObject.primaryKey;
-}
-
-CURRENT_OBJECT_NAME_STRING : WOString {
-	value = objectName;
-}
-
 OBJECT_REPETITION : WORepetition {
 	item = currentObject;
 	list = allObjects;
-}
-
-SELECT_OBJECT_LINK : WOHyperlink {
-	action = selectObject; 
 }
 
 CREATE_LINK : WOHyperlink {
