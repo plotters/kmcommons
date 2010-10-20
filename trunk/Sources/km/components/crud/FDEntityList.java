@@ -2,11 +2,18 @@ package km.components.crud;
 
 import km.components.KMComponent;
 
-import com.webobjects.appserver.*;
-import com.webobjects.eoaccess.*;
-import com.webobjects.foundation.*;
+import com.webobjects.appserver.WOActionResults;
+import com.webobjects.appserver.WOContext;
+import com.webobjects.eoaccess.EOEntity;
+import com.webobjects.eoaccess.EOModel;
+import com.webobjects.eoaccess.EOModelGroup;
+import com.webobjects.eoaccess.EOUtilities;
+import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSData;
+import com.webobjects.foundation.NSMutableArray;
 
-import er.extensions.eof.*;
+import er.extensions.eof.ERXEOControlUtilities;
+import er.extensions.eof.ERXGenericRecord;
 
 /**
  * @author Hugi Þórðarson
@@ -14,6 +21,7 @@ import er.extensions.eof.*;
 
 public class FDEntityList extends KMComponent {
 
+	public String currentAttributeName;
 	public String currentEntityName;
 
 	private String _selectedEntityName;
@@ -23,6 +31,11 @@ public class FDEntityList extends KMComponent {
 
 	public FDEntityList( WOContext context ) {
 		super( context );
+	}
+
+	public NSArray<String> attributeNames() {
+		EOEntity entity = EOModelGroup.defaultGroup().entityNamed( selectedEntityName() );
+		return entity.classPropertyNames();
 	}
 
 	/**
@@ -73,14 +86,19 @@ public class FDEntityList extends KMComponent {
 		return nextPage;
 	}
 
-	public String objectName() {
+	public Object currentValue() {
 		try {
-			// FIXME: This is ugly.
-			return (String)currentObject.valueForKey( "name" );
+			Object o = currentObject.valueForKey( currentAttributeName );
+			return o;
 		}
 		catch( Exception e ) {
-			return "(enginn heitisreitur fannst)";
+			System.out.println( e );
+			return "???";
 		}
+	}
+
+	public boolean isImage() {
+		return currentValue() instanceof NSData;
 	}
 
 	public WOActionResults createObject() {
