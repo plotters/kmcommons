@@ -125,20 +125,31 @@ public class FDEditObject extends KMComponent {
 	}
 
 	public Format fieldFormatter() {
-		if( attributeIsInteger() )
+		if( attributeIsInteger() ) {
 			return new NSNumberFormatter( "0" );
+		}
 
-		if( attributeIsTimestamp() )
+		if( attributeIsTimestamp() ) {
 			return new NSTimestampFormatter( "%d.%m.%y, %H:%M" );
+		}
 
-		if( attributeIsString() )
+		if( attributeIsString() ) {
 			return null;
+		}
 
 		return null;
 	}
 
 	public boolean attributeIsInteger() {
-		return INTEGER_CLASS.equals( currentAttribute().valueTypeClassName() );
+//		return INTEGER_CLASS.equals(  );
+		try {
+			Class clazz = Class.forName( currentAttribute().valueTypeClassName() );
+			return java.lang.Number.class.isAssignableFrom( clazz );
+		}
+		catch( Exception e ) {
+			System.out.println( e );
+			return false;
+		}
 	}
 
 	public boolean attributeIsString() {
